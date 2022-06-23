@@ -42,6 +42,15 @@ this.categoryService.getCategories().subscribe(response=>{
       return "list-group-item"
     }
   }
+
+  getAllCategoryClass(){
+    if(!this.currentCategory){
+      return "list-group-item active"
+    }
+    else{
+      return "list-group-item"
+    }
+  }
   
 
 }
