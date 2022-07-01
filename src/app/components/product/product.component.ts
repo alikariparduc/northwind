@@ -3,6 +3,7 @@ import { Product } from 'src/app/models/product';
 import {HttpClient} from '@angular/common/http';//Backentteki dataya ulaşmak için import ettim.
 import { ProductService } from 'src/app/services/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -13,10 +14,11 @@ export class ProductComponent implements OnInit {
   
   products:Product[] = [];
   dataLoaded=false;
+  filterText="";
  
    
   constructor(private productService:ProductService,
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute:ActivatedRoute ,private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
@@ -49,4 +51,12 @@ this.productService.getProducts().subscribe(response=>{
     
       }
 
+  addToCart(product:Product){
+    if(product.productId==1){
+      this.toastrService.error("Yetersiz Stok Sepete Eklenemedi!!!" ,product.productName)
+    }
+    else{
+    this.toastrService.success("Sepete Eklendi..." ,product.productName)
+    }
+  }
 }
